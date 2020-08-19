@@ -1,6 +1,6 @@
 handlers.updateAllPlayerStatistics = function (args, context) {
     var points = 0;
-    if (args && args.HasOwnProperty("Points"))
+    if (args && args.hasOwnProperty("Points"))
         points = args.Points;
 
     var highScoreStatResult = updatePlayerStatistics("High Score", points);
