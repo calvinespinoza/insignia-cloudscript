@@ -1,14 +1,27 @@
-handlers.UpdatePlayerStatistics = function (args, context) {
-    var request = {
-        PlayFabId: currentPlayerId, 
-        Statistics: [{
-                StatisticName: "Level",
-                Value: args.Points
-            }]
-    };
-    // The pre-defined "server" object has functions corresponding to each PlayFab server API 
-    // (https://api.playfab.com/Documentation/Server). It is automatically 
-    // authenticated as your title and handles all communication with 
-    // the PlayFab API, so you don't have to write extra code to issue HTTP requests. 
-    var playerStatResult = server.UpdatePlayerStatistics(request);
+handlers.updateAllPlayerStatistics = function (args, context) {
+    var points = 0;
+    if (args && args.HasOwnProperty("Points"))
+        points = args.Points;
+
+    var highScoreStatResult = updatePlayerStatistics("High Score", points);
+    var latestScoreStatResult = updatePlayerStatistics("Latest Score", points);
+    var totalScoreStatResult = updatePlayerStatistics("Total Score", points);
+    var totalAttemptsStatResult = updatePlayerStatistics("Total Attempts", 1);
+
+    var returnMessage = highScoreStatResult + latestScoreStatResult 
+        + totalScoreStatResult + totalAttemptsStatResult;
+    return returnMessage;
 };
+
+function updatePlayerStatistics(statisticName, value)
+{
+    var request = {
+        PlayFabId: currentPlayerId,
+        Statistics: [{
+            StatisticName: statisticName,
+            Value: value
+        }]
+    };
+    var playerStatResult = server.UpdatePlayerStatistics(request);
+    return playerStatResult;
+}
