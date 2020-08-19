@@ -8,12 +8,14 @@ handlers.updateAllPlayerStatistics = function (args, context) {
     var totalScoreStatResult = updatePlayerStatistics("Total Score", points);
     var totalAttemptsStatResult = updatePlayerStatistics("Total Attempts", 1);
 
-    var returnMessage = [];
-    returnMessage.push(highScoreStatResult);
-    returnMessage.push(latestScoreStatResult);
-    returnMessage.push(totalScoreStatResult);
-    returnMessage.push(totalAttemptsStatResult);
-    
+    var returnMessage = 
+    {
+        "highScoreResult": highScoreStatResult,
+        "latestScoreResult": latestScoreStatResult,
+        "totalScoreResult": totalScoreStatResult,
+        "totalAttempatsResult": totalAttemptsStatResult
+    };
+  
     return returnMessage;
 };
 
