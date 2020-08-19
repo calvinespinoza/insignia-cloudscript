@@ -3,7 +3,7 @@ handlers.UpdatePlayerStatistics = function (args, context) {
         PlayFabId: currentPlayerId, 
         Statistics: [{
                 StatisticName: "Level",
-                Value: 2
+                Value: args.Points
             }]
     };
     // The pre-defined "server" object has functions corresponding to each PlayFab server API 
