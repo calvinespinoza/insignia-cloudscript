@@ -8,8 +8,12 @@ handlers.updateAllPlayerStatistics = function (args, context) {
     var totalScoreStatResult = updatePlayerStatistics("Total Score", points);
     var totalAttemptsStatResult = updatePlayerStatistics("Total Attempts", 1);
 
-    var returnMessage = highScoreStatResult + latestScoreStatResult 
-        + totalScoreStatResult + totalAttemptsStatResult;
+    var returnMessage = [];
+    returnMessage.push(highScoreStatResult);
+    returnMessage.push(latestScoreStatResult);
+    returnMessage.push(totalScoreStatResult);
+    returnMessage.push(totalAttemptsStatResult);
+    
     return returnMessage;
 };
 
