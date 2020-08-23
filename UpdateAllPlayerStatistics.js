@@ -3,30 +3,31 @@ handlers.updateAllPlayerStatistics = function (args, context) {
     if (args && args.hasOwnProperty("Points"))
         points = args.Points;
 
-    var highScoreStatResult = updatePlayerStatistics("High Score", points);
-    var latestScoreStatResult = updatePlayerStatistics("Latest Score", points);
-    var totalScoreStatResult = updatePlayerStatistics("Total Score", points);
-    var totalAttemptsStatResult = updatePlayerStatistics("Total Attempts", 1);
-
-    var returnMessage = 
-    {
-        "highScoreResult": highScoreStatResult,
-        "latestScoreResult": latestScoreStatResult,
-        "totalScoreResult": totalScoreStatResult,
-        "totalAttempatsResult": totalAttemptsStatResult
-    };
-  
+    var returnMessage = updatePlayerStatistics(points);
     return returnMessage;
 };
 
-function updatePlayerStatistics(statisticName, value)
-{
+function updatePlayerStatistics(value) {
     var request = {
         PlayFabId: currentPlayerId,
-        Statistics: [{
-            StatisticName: statisticName,
-            Value: value
-        }]
+        Statistics: [
+            {
+                StatisticName: "High Score",
+                Value: value
+            },
+            {
+                StatisticName: "Latest Score",
+                Value: value
+            }, 
+            {
+                StatisticName: "Total Score",
+                Value: value
+            }, 
+            {
+                StatisticName: "Total Attempts",
+                Value: 1
+            },
+        ]
     };
     var playerStatResult = server.UpdatePlayerStatistics(request);
     return playerStatResult;
