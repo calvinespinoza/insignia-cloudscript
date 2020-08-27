@@ -37,7 +37,7 @@ function updatePlayerStatistics(value) {
 function addPointsHistory(value) {
     var  dataObject =
     {
-        Points: valyue
+        Points: value
     }
     var setObjectsRequest = {
         ObjectName: "Attempts",
