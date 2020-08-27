@@ -4,6 +4,7 @@ handlers.updateAllPlayerStatistics = function (args, context) {
         points = args.Points;
 
     var returnMessage = updatePlayerStatistics(points);
+    addPointsHistory(points);
     return returnMessage;
 };
 
@@ -31,4 +32,21 @@ function updatePlayerStatistics(value) {
     };
     var playerStatResult = server.UpdatePlayerStatistics(request);
     return playerStatResult;
+}
+
+function addPointsHistory(value) {
+    var  dataObject =
+    {
+        Points: valyue
+    }
+    var setObjectsRequest = {
+        ObjectName: "Attempts",
+        DataObject: dataObject
+    };
+
+    try {
+        entity.SetObjects(setObjectsRequest);
+    } catch (ex) {
+        log.error(ex);
+    }
 }
