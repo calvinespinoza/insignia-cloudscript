@@ -42,7 +42,7 @@ function addPointsHistory(value, entityProfile) {
         Points: value
     }
     var setObjectsRequest = {
-        Entity: entityProfile.Entity,
+        Entity: currentEntity,
         Objects: [
             {
                 ObjectName: "Attempts",
