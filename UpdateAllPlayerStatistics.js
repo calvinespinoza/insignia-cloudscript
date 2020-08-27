@@ -40,7 +40,10 @@ function addPointsHistory(value) {
         Points: value
     }
     var setObjectsRequest = {
-        Entity: entity,
+        Entity: {
+            EntityId: currentPlayerId,
+            EntityType: "title_player_account"
+        },
         Objects: [
             {
                 ObjectName: "Attempts",
