@@ -35,18 +35,14 @@ function updatePlayerStatistics(value) {
 }
 
 function addPointsHistory(value) {
+    var entityProfile = context.currentEntity;
+
     var dataObject =
     {
         Points: value
     }
     var setObjectsRequest = {
-        Entity: {
-            EntityKey:
-            {
-                EntityId: currentPlayerId,
-                EntityType: "title_player_account"
-            }
-        },
+        Entity: entityProfile.Entity,
         Objects: [
             {
                 ObjectName: "Attempts",
