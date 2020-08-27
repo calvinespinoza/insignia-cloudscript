@@ -19,11 +19,11 @@ function updatePlayerStatistics(value) {
             {
                 StatisticName: "Latest Score",
                 Value: value
-            }, 
+            },
             {
                 StatisticName: "Total Score",
                 Value: value
-            }, 
+            },
             {
                 StatisticName: "Total Attempts",
                 Value: 1
@@ -35,13 +35,18 @@ function updatePlayerStatistics(value) {
 }
 
 function addPointsHistory(value) {
-    var  dataObject =
+    var dataObject =
     {
         Points: value
     }
     var setObjectsRequest = {
-        ObjectName: "Attempts",
-        DataObject: dataObject
+        Entity: entity,
+        Objects: [
+            {
+                ObjectName: "Attempts",
+                DataObject: dataObject
+            }
+        ]
     };
 
     try {
