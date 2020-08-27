@@ -36,7 +36,7 @@ function updatePlayerStatistics(value) {
     return playerStatResult;
 }
 
-function addPointsHistory(value) {
+function addPointsHistory(value, entityProfile) {
     var dataObject =
     {
         Points: value
