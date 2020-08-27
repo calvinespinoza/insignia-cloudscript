@@ -1,10 +1,12 @@
 handlers.updateAllPlayerStatistics = function (args, context) {
+    var entityProfile = context.currentEntity;
+
     var points = 0;
     if (args && args.hasOwnProperty("Points"))
         points = args.Points;
 
     var returnMessage = updatePlayerStatistics(points);
-    addPointsHistory(points);
+    addPointsHistory(points, entityProfile);
     return returnMessage;
 };
 
@@ -35,8 +37,6 @@ function updatePlayerStatistics(value) {
 }
 
 function addPointsHistory(value) {
-    var entityProfile = context.currentEntity;
-
     var dataObject =
     {
         Points: value
