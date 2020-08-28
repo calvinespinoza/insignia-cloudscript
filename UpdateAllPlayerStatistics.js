@@ -59,23 +59,25 @@ function addPointsHistory(value, entityProfile) {
 
     log.debug(entityObjects);
 
-    var newPointsObject =
-    {
+    var newPointsObject = {
         Points: value,
         TimeStamp: Date.now()
     }
 
     var dataObject = [newPointsObject];
+
     if (entityObjects.Objects.PointsHistory) {
         var pointsHistory = entityObjects.Objects.PointsHistory.DataObject.History;
+        log.debug({ PointsHistory: pointsHistory });
 
         if (lengthInUtf8Bytes(pointsHistory) + lengthInUtf8Bytes(newPointsObject) > 950)
             pointsHistory.shift();
-        
-        pointsHistory.push(newPointsObject);
 
+        pointsHistory.push(newPointsObject);
         dataObject = pointsHistory;
     }
+
+    log.debug({ newDataObject: dataObject });
 
     var setObjectsRequest = {
         Entity: entityProfile,
