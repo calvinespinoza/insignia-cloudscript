@@ -46,9 +46,14 @@ function updatePlayerStatistics(value) {
 }
 
 function addPointsHistory(value, entity) {
-    var entityObjects = entity.GetObjects({
-        Entity: entity
-    });
+    try {
+        var entityObjects = entity.GetObjects({
+            Entity: entity
+        });
+    } catch (ex) {
+        log.error(ex);
+    }
+
     log.debug(entityObjects);
 
     var setObjectsRequest = {
