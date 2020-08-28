@@ -61,7 +61,7 @@ function addPointsHistory(value, entityProfile) {
 
     var newPointsObject = {
         Points: value,
-        TimeStamp: new Date().toLocaleString()
+        Timestamp: getCurrentDate()
     }
 
     var dataObject = [newPointsObject];
@@ -96,4 +96,16 @@ function addPointsHistory(value, entityProfile) {
     } catch (ex) {
         log.error(ex);
     }
+}
+
+function getCurrentDate()
+{
+    var date = new Date();
+    var DD = date.getDate();
+    var MM = date.getMonth() + 1;
+    var YY = date.getFullYear().substring(2,4);
+    var hh = date.getHours();
+    var mm = date.getMinutes();
+
+    return `${DD}/${MM}/${YY} ${hh}:${mm}`
 }
