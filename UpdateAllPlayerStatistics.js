@@ -20,13 +20,10 @@ handlers.updateAllPlayerStatistics = function (args, context) {
     var points = 0;
     var entity = getCurrentEntity();
 
-    log.info(JSON.stringify({myEntity: entity}));
+    log.info(JSON.stringify({updatedEntity: entity}));
 
     if (args && args.hasOwnProperty("Points"))
         points = args.Points;
-
-    if (args && args.hasOwnProperty("Entity"))
-        entity = args.Entity;
 
     var returnMessage = updatePlayerStatistics(points);
     addPointsHistory(points, entity);
