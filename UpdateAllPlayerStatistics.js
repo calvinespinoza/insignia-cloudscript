@@ -63,7 +63,7 @@ function addPointsHistory(value, entity) {
         Points: value
     }
     var setObjectsRequest = {
-        Entity: entity.Id,
+        Entity: entity,
         Objects: [
             {
                 ObjectName: "Points History",
