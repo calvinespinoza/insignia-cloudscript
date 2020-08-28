@@ -9,7 +9,7 @@ function getCurrentEntity(context) {
 
 handlers.updateAllPlayerStatistics = function (args, context) {
     var points = 0;
-    var entityProfile = getCurrentEntity();
+    var entityProfile = getCurrentEntity(context);
 
     log.info({ updatedEntity: entityProfile });
 
