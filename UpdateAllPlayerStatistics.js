@@ -70,7 +70,7 @@ function addPointsHistory(value, entityProfile) {
         var pointsHistory = entityObjects.Objects.PointsHistory.DataObject.History;
         log.debug({ PointsHistory: pointsHistory });
 
-        if (lengthInUtf8Bytes(pointsHistory) + lengthInUtf8Bytes(newPointsObject) > 950)
+        if (pointsHistory.length >= 10)
             pointsHistory.shift();
 
         pointsHistory.push(newPointsObject);
