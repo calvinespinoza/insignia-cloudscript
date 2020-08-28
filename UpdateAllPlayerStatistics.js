@@ -1,5 +1,5 @@
 function getCurrentEntity() {
-    var response = client.GetAccountInfo({
+    var response = server.GetUserAccountInfo({
         PlayFabId: currentPlayerId
     });
 
