@@ -15,7 +15,8 @@ handlers.SetObjectsTest = function (args, context) {
                 }
             },
             {
-                "SimpleStatements": {
+                "ObjectName": "SimpleStatements",
+                "DataObject": {
                     "Read": [
                         {
                             "Friend": true
