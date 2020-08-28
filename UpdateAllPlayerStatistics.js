@@ -1,8 +1,16 @@
 function getCurrentEntity() {
-    var response = server.GetUserAccountInfo({
-        PlayFabId: currentPlayerId
-    });
-
+    
+    try {
+        var response = server.GetUserAccountInfo({
+            PlayFabId: currentPlayerId
+        });
+    } catch (ex) {
+        log.error(ex);
+        server.WriteTitleEvent({
+            EventName : 'cs_error',
+            Body : ex
+        });
+    }
     return response.data.UserInfo.TitleInfo.TitlePlayerAccount;
 }
 
