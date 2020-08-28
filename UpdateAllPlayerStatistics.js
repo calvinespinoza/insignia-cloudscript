@@ -54,7 +54,7 @@ function addPointsHistory(value, entity) {
         log.error(ex);
     }
 
-    log.debug(entityObjects);
+    log.debug(entity);
 
     var setObjectsRequest = {
         Entity: entity,
