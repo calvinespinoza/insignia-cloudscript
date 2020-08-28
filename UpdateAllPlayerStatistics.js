@@ -46,12 +46,19 @@ function updatePlayerStatistics(value) {
 }
 
 function addPointsHistory(value, entity) {
+    var entityObjects = entity.GetObjects({
+        Entity: entity
+    });
+    log.debug(entityObjects);
+
     var setObjectsRequest = {
         Entity: entity,
         Objects: [
             {
                 ObjectName: "Points History",
-                DataObject: value
+                DataObject: {
+                    Points: value
+                }
             }
         ]
     };
