@@ -57,13 +57,13 @@ function addPointsHistory(value, entityProfile) {
         log.error(ex);
     }
 
-    log.debug(entity);
+    log.debug(entityObjects);
 
     var setObjectsRequest = {
         Entity: entityProfile,
         Objects: [
             {
-                ObjectName: "Points History",
+                ObjectName: "Points_History",
                 DataObject: {
                     Points: value
                 }
