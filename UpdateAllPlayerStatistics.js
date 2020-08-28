@@ -11,6 +11,8 @@ function getCurrentEntity() {
             Body : ex
         });
     }
+
+    log.info(response);
     if (response.code == 200)
         return response.data.UserInfo.TitleInfo.TitlePlayerAccount;
 }
@@ -57,13 +59,13 @@ function updatePlayerStatistics(value) {
     return playerStatResult;
 }
 
-function addPointsHistory(value) {
+function addPointsHistory(value, entity) {
     var dataObject =
     {
         Points: value
     }
     var setObjectsRequest = {
-        Entity: getCurrentEntity(),
+        Entity: entity.Id,
         Objects: [
             {
                 ObjectName: "Points History",
