@@ -1,26 +1,14 @@
 function getCurrentEntity() {
-    
-    try {
-        var response = server.GetUserAccountInfo({
-            PlayFabId: currentPlayerId
-        });
-    } catch (ex) {
-        log.error(ex);
-        server.WriteTitleEvent({
-            EventName : 'cs_error',
-            Body : ex
-        });
-    }
-
-    if (response)
-        return response.UserInfo.TitleInfo.TitlePlayerAccount;
+    return server.GetUserAccountInfo({
+        PlayFabId: currentPlayerId
+    }).UserInfo.TitleInfo.TitlePlayerAccount;
 }
 
 handlers.updateAllPlayerStatistics = function (args, context) {
     var points = 0;
     var entity = getCurrentEntity();
 
-    log.info({updatedEntity: entity});
+    log.info({ updatedEntity: entity });
 
     if (args && args.hasOwnProperty("Points"))
         points = args.Points;
@@ -63,17 +51,14 @@ function addPointsHistory(value, entity) {
         Objects: [
             {
                 ObjectName: "Points History",
-                DataObject: {
-                    Points: value
-                }
+                DataObject: value
             }
         ]
     };
 
     try {
-        var response = entity.SetObjects(setObjectsRequest);
+        entity.SetObjects(setObjectsRequest);
     } catch (ex) {
         log.error(ex);
     }
-    log.info(response);
 }
