@@ -1,4 +1,7 @@
-function getCurrentEntity() {
+function getCurrentEntity(context) {
+    if (context.currentEntity)
+        return context.currentEntity.Entity;
+
     return server.GetUserAccountInfo({
         PlayFabId: currentPlayerId
     }).UserInfo.TitleInfo.TitlePlayerAccount;
@@ -6,15 +9,15 @@ function getCurrentEntity() {
 
 handlers.updateAllPlayerStatistics = function (args, context) {
     var points = 0;
-    var entity = getCurrentEntity();
+    var entityProfile = getCurrentEntity();
 
-    log.info({ updatedEntity: entity });
+    log.info({ updatedEntity: entityProfile });
 
     if (args && args.hasOwnProperty("Points"))
         points = args.Points;
 
     var returnMessage = updatePlayerStatistics(points);
-    addPointsHistory(points, entity);
+    addPointsHistory(points, entityProfile);
 
     return returnMessage;
 };
@@ -45,10 +48,10 @@ function updatePlayerStatistics(value) {
     return playerStatResult;
 }
 
-function addPointsHistory(value, entity) {
+function addPointsHistory(value, entityProfile) {
     try {
         var entityObjects = entity.GetObjects({
-            Entity: entity
+            Entity: entityProfile
         });
     } catch (ex) {
         log.error(ex);
@@ -57,7 +60,7 @@ function addPointsHistory(value, entity) {
     log.debug(entity);
 
     var setObjectsRequest = {
-        Entity: entity,
+        Entity: entityProfile,
         Objects: [
             {
                 ObjectName: "Points History",
