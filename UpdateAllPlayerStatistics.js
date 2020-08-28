@@ -12,14 +12,15 @@ function getCurrentEntity() {
         });
     }
 
-    log.info(response);
-    if (response.code == 200)
-        return response.data.UserInfo.TitleInfo.TitlePlayerAccount;
+    if (response)
+        return response.UserInfo.TitleInfo.TitlePlayerAccount;
 }
 
 handlers.updateAllPlayerStatistics = function (args, context) {
     var points = 0;
     var entity = getCurrentEntity();
+
+    log.info(JSON.stringify({myEntity: entity}));
 
     if (args && args.hasOwnProperty("Points"))
         points = args.Points;
