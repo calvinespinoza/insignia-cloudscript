@@ -3,7 +3,7 @@ function getCurrentEntity() {
         PlayFabId: currentPlayerId
     });
 
-    return response.data.AccountInfo.TitleInfo.TitlePlayerAccount;
+    return response.data.UserInfo.TitleInfo.TitlePlayerAccount;
 }
 
 handlers.updateAllPlayerStatistics = function (args, context) {
