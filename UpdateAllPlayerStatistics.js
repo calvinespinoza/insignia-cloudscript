@@ -61,7 +61,7 @@ function addPointsHistory(value, entityProfile) {
 
     var newPointsObject = {
         Points: value,
-        TimeStamp: Date.now()
+        TimeStamp: new Date().toLocaleString()
     }
 
     var dataObject = [newPointsObject];
