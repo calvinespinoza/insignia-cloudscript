@@ -1,3 +1,11 @@
+function getCurrentEntity() {
+    var response = client.GetAccountInfo({
+        PlayFabId: currentPlayerId
+    });
+
+    return response.data.AccountInfo.TitleInfo.TitlePlayerAccount;
+}
+
 handlers.updateAllPlayerStatistics = function (args, context) {
     var points = 0;
     var entity = context.currentEntity;
@@ -9,9 +17,8 @@ handlers.updateAllPlayerStatistics = function (args, context) {
         entity = args.Points;
 
     var returnMessage = updatePlayerStatistics(points);
+    addPointsHistory(points);
 
-    if (entity)
-        addPointsHistory(points, entity);
     return returnMessage;
 };
 
@@ -41,16 +48,16 @@ function updatePlayerStatistics(value) {
     return playerStatResult;
 }
 
-function addPointsHistory(value, entity) {
+function addPointsHistory(value) {
     var dataObject =
     {
         Points: value
     }
     var setObjectsRequest = {
-        Entity: entity,
+        Entity: getCurrentEntity(),
         Objects: [
             {
-                ObjectName: "Attempts",
+                ObjectName: "Points History",
                 DataObject: dataObject
             }
         ]
