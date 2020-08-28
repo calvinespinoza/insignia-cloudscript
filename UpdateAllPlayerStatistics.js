@@ -76,3 +76,4 @@ function addPointsHistory(value, entity) {
         log.error(ex);
     }
     log.info(response);
+}
