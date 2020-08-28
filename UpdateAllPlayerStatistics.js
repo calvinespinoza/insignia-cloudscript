@@ -20,7 +20,7 @@ handlers.updateAllPlayerStatistics = function (args, context) {
     var points = 0;
     var entity = getCurrentEntity();
 
-    log.info(JSON.stringify({updatedEntity: entity}));
+    log.info({updatedEntity: entity});
 
     if (args && args.hasOwnProperty("Points"))
         points = args.Points;
@@ -58,23 +58,21 @@ function updatePlayerStatistics(value) {
 }
 
 function addPointsHistory(value, entity) {
-    var dataObject =
-    {
-        Points: value
-    }
     var setObjectsRequest = {
         Entity: entity,
         Objects: [
             {
                 ObjectName: "Points History",
-                DataObject: dataObject
+                DataObject: {
+                    Points: value
+                }
             }
         ]
     };
 
     try {
-        entity.SetObjects(setObjectsRequest);
+        var response = entity.SetObjects(setObjectsRequest);
     } catch (ex) {
         log.error(ex);
     }
-}
+    log.info(response);
