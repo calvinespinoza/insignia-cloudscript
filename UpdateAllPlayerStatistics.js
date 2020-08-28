@@ -17,7 +17,7 @@ handlers.updateAllPlayerStatistics = function (args, context) {
         points = args.Points;
 
     var returnMessage = updatePlayerStatistics(points);
-    addPointsHistory(points, entityProfile);
+    updatePointsHistory(points, entityProfile);
 
     return returnMessage;
 };
@@ -48,7 +48,7 @@ function updatePlayerStatistics(value) {
     return playerStatResult;
 }
 
-function addPointsHistory(value, entityProfile) {
+function updatePointsHistory(value, entityProfile) {
     try {
         var entityObjects = entity.GetObjects({
             Entity: entityProfile
@@ -56,9 +56,28 @@ function addPointsHistory(value, entityProfile) {
     } catch (ex) {
         log.error(ex);
     }
-
     log.debug(entityObjects);
 
+    var dataObject = getNewPointsHistoryDataObject(value, entityObjects);
+
+    var setObjectsRequest = {
+        Entity: entityProfile,
+        Objects: [{
+            ObjectName: "PointsHistory",
+            DataObject: {
+                History: dataObject
+            }
+        }]
+    };
+
+    try {
+        entity.SetObjects(setObjectsRequest);
+    } catch (ex) {
+        log.error(ex);
+    }
+}
+
+function getNewPointsHistoryDataObject(value, entityObjects) {
     var newPointsObject = {
         Points: value,
         Timestamp: getCurrentDate()
@@ -78,29 +97,12 @@ function addPointsHistory(value, entityProfile) {
     }
 
     log.debug({ newDataObject: dataObject });
-
-    var setObjectsRequest = {
-        Entity: entityProfile,
-        Objects: [
-            {
-                ObjectName: "PointsHistory",
-                DataObject: {
-                    History: dataObject
-                }
-            }
-        ]
-    };
-
-    try {
-        entity.SetObjects(setObjectsRequest);
-    } catch (ex) {
-        log.error(ex);
-    }
+    return dataObject;
 }
 
 function getCurrentDate() {
     var now = new Date();
-    var year = now.getFullYear().toString().substring(2,4);
+    var year = now.getFullYear().toString().substring(2, 4);
     var month = now.getMonth() + 1;
     var day = now.getDate();
     var hour = now.getHours();
