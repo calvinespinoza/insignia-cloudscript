@@ -11,21 +11,22 @@ function getCurrentEntity() {
             Body : ex
         });
     }
-    return response.data.UserInfo.TitleInfo.TitlePlayerAccount;
+    if (response.code == 200)
+        return response.data.UserInfo.TitleInfo.TitlePlayerAccount;
 }
 
 handlers.updateAllPlayerStatistics = function (args, context) {
     var points = 0;
-    var entity = context.currentEntity;
+    var entity = getCurrentEntity();
 
     if (args && args.hasOwnProperty("Points"))
         points = args.Points;
 
     if (args && args.hasOwnProperty("Entity"))
-        entity = args.Points;
+        entity = args.Entity;
 
     var returnMessage = updatePlayerStatistics(points);
-    addPointsHistory(points);
+    addPointsHistory(points, entity);
 
     return returnMessage;
 };
