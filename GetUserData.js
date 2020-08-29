@@ -34,8 +34,8 @@ function getUserPointsHistory(entityProfile) {
         log.error(ex);
     }
     log.debug(entityObjects);
-    if (entityObjects.Objects.PointHistory)
-        return entityObjects.Objects.PointHistory.DataObject.History;
+    if (entityObjects.Objects.PointsHistory)
+        return entityObjects.Objects.PointsHistory.DataObject.History;
 
     return null
 }
