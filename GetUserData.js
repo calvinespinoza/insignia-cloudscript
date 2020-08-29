@@ -8,7 +8,9 @@ handlers.getUserData = function (args, context) {
 
     var userData = server.GetUserData(userDataRequest);
 
-    var stats = server.GetPlayerStatistics({PlayFabId: currentPlayerId});
+    var stats = server.GetPlayerStatistics({ PlayFabId: currentPlayerId });
+
+    var pointsHistory = getUserPointsHistory(user.UserInfo.TitleInfo.TitlePlayerAccount);
 
     var returnObject = {
         PlayFabId: currentPlayerId,
@@ -17,7 +19,23 @@ handlers.getUserData = function (args, context) {
         Age: userData.Data.Age.Value,
         Country: userData.Data.Country.Value,
         School: userData.Data.School.Value,
-        Statistics: stats
+        Statistics: stats.Statistics, 
+        PointsHistory: pointsHistory
     }
     return returnObject;
+}
+
+function getUserPointsHistory(entityProfile) {
+    try {
+        var entityObjects = entity.GetObjects({
+            Entity: entityProfile
+        });
+    } catch (ex) {
+        log.error(ex);
+    }
+    log.debug(entityObjects);
+    if (entityObjects.Objects.PointHistory)
+        return entityObjects.Objects.PointHistory.DataObject.History;
+
+    return null
 }
