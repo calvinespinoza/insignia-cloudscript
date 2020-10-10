@@ -177,7 +177,7 @@ function calculateNewCurrentLevel(newXP, currentLevel) {
       
     return {
         currentLevel: currentLevel,
-        nextLevelProgress: (newXP / nextLevelPoints).toFixed(2)
+        nextLevelProgress: parseFloat((newXP / nextLevelPoints).toFixed(2))
     }
 }
 
