@@ -161,7 +161,7 @@ function updateLevelProgress(points, entityProfile) {
         NextLevelProgress: newLevelData.nextLevelProgress
     }
 
-    setPlayerObject(entityProfile, "Level Progress", newLevelProgress);
+    setPlayerObject(entityProfile, "LevelProgress", newLevelProgress);
 
     newLevelProgress.LevelledUp = oldCurrentLevel != newLevelData.currentLevel;
     return newLevelProgress;
