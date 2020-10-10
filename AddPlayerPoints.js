@@ -148,8 +148,11 @@ function updateLevelProgress(points, entityProfile) {
         var levelProgress = entityObjects.Objects.LevelProgress.DataObject;
         log.debug({ LevelProgress: levelProgress });
 
-        oldXP = levelProgress.XP;
-        oldCurrentLevel = levelProgress.CurrentLevel;
+        if (levelProgress.XP)
+            oldXP = levelProgress.XP;
+
+        if (levelProgress.CurrentLevel)
+            oldCurrentLevel = levelProgress.CurrentLevel;
     } 
 
     var newXP = oldXP + points;
