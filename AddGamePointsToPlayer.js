@@ -173,7 +173,7 @@ function calculateNewCurrentLevel(newXP, currentLevel) {
 
     while (newXP >= nextLevelPoints) {
         currentLevel++;
-        nextLevelPoints = calculateNewLevelPoints(currentLevel);
+        nextLevelPoints = calculateNextLevelPoints(currentLevel);
     }
       
     return {
