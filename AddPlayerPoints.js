@@ -60,7 +60,8 @@ function updatePointsHistory(value, entityProfile) {
     log.debug(entityObjects);
 
     var dataObject = getNewPointsHistoryDataObject(value, entityObjects);
-    setPlayerObject(entityProfile, "PointsHistory", dataObject);
+    var pointsHistory = { History: dataObject };
+    setPlayerObject(entityProfile, "PointsHistory", pointsHistory);
 }
 
 function getNewPointsHistoryDataObject(value, entityObjects) {
@@ -119,9 +120,7 @@ function setPlayerObject(entityProfile, objectName, dataObject) {
         Entity: entityProfile,
         Objects: [{
             ObjectName: objectName,
-            DataObject: {
-                History: dataObject
-            }
+            DataObject: dataObject
         }]
     };
 
@@ -178,7 +177,7 @@ function calculateNewCurrentLevel(newXP, currentLevel) {
       
     return {
         currentLevel: currentLevel,
-        nextLevelProgress: newXP / nextLevelPoints
+        nextLevelProgress: (newXP / nextLevelPoints).toFixed(2)
     }
 }
 
