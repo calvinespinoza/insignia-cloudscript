@@ -7,7 +7,7 @@ function getCurrentEntity(context) {
     }).UserInfo.TitleInfo.TitlePlayerAccount;
 }
 
-handlers.updateAllPlayerStatistics = function (args, context) {
+handlers.addPlayerPoints = function (args, context) {
     var points = 0;
     var entityProfile = getCurrentEntity(context);
 
@@ -18,8 +18,9 @@ handlers.updateAllPlayerStatistics = function (args, context) {
 
     var returnMessage = updatePlayerStatistics(points);
     updatePointsHistory(points, entityProfile);
+    var newLevelProgress = updateLevelProgress(points, entityProfile);
 
-    return returnMessage;
+    return newLevelProgress;
 };
 
 function updatePlayerStatistics(value) {
@@ -59,22 +60,7 @@ function updatePointsHistory(value, entityProfile) {
     log.debug(entityObjects);
 
     var dataObject = getNewPointsHistoryDataObject(value, entityObjects);
-
-    var setObjectsRequest = {
-        Entity: entityProfile,
-        Objects: [{
-            ObjectName: "PointsHistory",
-            DataObject: {
-                History: dataObject
-            }
-        }]
-    };
-
-    try {
-        entity.SetObjects(setObjectsRequest);
-    } catch (ex) {
-        log.error(ex);
-    }
+    setPlayerObject(entityProfile, "PointsHistory", dataObject);
 }
 
 function getNewPointsHistoryDataObject(value, entityObjects) {
@@ -126,4 +112,77 @@ function getCurrentDate() {
     }
     var dateTime = year + '/' + month + '/' + day + ' ' + hour + ':' + minute + ':' + second;
     return dateTime;
+}
+
+function setPlayerObject(entityProfile, objectName, dataObject) {
+    var setObjectsRequest = {
+        Entity: entityProfile,
+        Objects: [{
+            ObjectName: objectName,
+            DataObject: {
+                History: dataObject
+            }
+        }]
+    };
+
+    try {
+        entity.SetObjects(setObjectsRequest);
+    } catch (ex) {
+        log.error(ex);
+    }
+    
+}
+
+function updateLevelProgress(points, entityProfile) {
+    try {
+        var entityObjects = entity.GetObjects({
+            Entity: entityProfile
+        });
+    } catch (ex) {
+        log.error(ex);
+    }
+
+    var oldXP = 0; 
+    var oldCurrentLevel = 1 
+
+    if (entityObjects.Objects.LevelProgress) {
+        var levelProgress = entityObjects.Objects.PointsHistory.DataObject;
+        log.debug({ LevelProgress: levelProgress });
+
+        oldXP = levelProgress.XP;
+        oldCurrentLevel = levelProgress.CurrentLevel;
+    } 
+
+    var newXP = oldXP + points;
+    var newLevelData = calculateNewCurrentLevel(newXP, oldCurrentLevel); 
+    
+    var newLevelProgress = {
+        XP: newXP,
+        CurrentLevel: newLevelData.currentLevel,
+        NextLevelProgress: newLevelData.nextLevelProgress
+    }
+
+    setPlayerObjects(entityProfile, "Level Progress", newLevelProgress);
+
+    newLevelProgress.LevelledUp = oldCurrentLevel != newLevelData.currentLevel;
+    return newLevelProgress;
+}
+
+function calculateNewCurrentLevel(newXP, currentLevel) {
+    var nextLevelPoints = calculateNextLevelPoints(currentLevel);
+
+    while (newXP >= nextLevelPoints) {
+        currentLevel++;
+        nextLevelPoints = calculateNewLevelPoints(currentLevel);
+    }
+      
+    return {
+        currentLevel: currentLevel,
+        nextLevelProgress: newXP / nextLevelPoints
+    }
+}
+
+function calculateNextLevelPoints(currentLevel) {
+    var nextLvl = currentLevel + 1;
+    return 2000 * Math.pow(nextLvl, 2) - 2000 * nextLvl;
 }
