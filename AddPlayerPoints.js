@@ -171,20 +171,22 @@ function updateLevelProgress(points, entityProfile) {
 }
 
 function calculateNewCurrentLevel(newXP, currentLevel) {
-    var nextLevelPoints = calculateNextLevelPoints(currentLevel);
+    var nextLevelPoints = calculatePointToReachLevel(currentLevel + 1);
 
     while (newXP >= nextLevelPoints) {
         currentLevel++;
-        nextLevelPoints = calculateNextLevelPoints(currentLevel);
+        nextLevelPoints = calculatePointsToReachLevel(currentLevel + 1);
     }
       
+    var lastLevelPoints = calculatePointsToReachLevel(currentLevel - 1);
+    var nextLevelProgress = (newXP - lastLevelPoints) / (nextLevelPoints - lastLevelPoints);
     return {
         currentLevel: currentLevel,
-        nextLevelProgress: parseFloat((newXP / nextLevelPoints).toFixed(2))
+        nextLevelProgress: parseFloat((nextLevelProgress).toFixed(2))
     }
 }
 
-function calculateNextLevelPoints(currentLevel) {
+function calculatePointsToReachLevel(currentLevel) {
     var nextLvl = currentLevel + 1;
     return 2000 * Math.pow(nextLvl, 2) - 2000 * nextLvl;
 }
