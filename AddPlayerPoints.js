@@ -186,7 +186,6 @@ function calculateNewCurrentLevel(newXP, currentLevel) {
     }
 }
 
-function calculatePointsToReachLevel(currentLevel) {
-    var nextLvl = currentLevel + 1;
-    return 5000 * Math.pow(nextLvl, 2) - 5000 * nextLvl;
+function calculatePointsToReachLevel(level) {
+    return 5000 * Math.pow(level, 2) - 5000 * level;
 }
