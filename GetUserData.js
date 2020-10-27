@@ -13,7 +13,7 @@ handlers.getUserData = function (args, context) {
     var entityObjects = getPlayerEntityObjects(titlePlayerAccount);
     var pointsHistory = getUserPointsHistory(entityObjects);
     var levelProgress = getUserLevelProgress(entityObjects);
-    
+
     var returnObject = {
         PlayFabId: currentPlayerId,
         Username: user.UserInfo.Username,
@@ -48,6 +48,6 @@ function getUserPointsHistory(entityObjects) {
 
 function getUserLevelProgress(entityObjects) {
     if (entityObjects.Objects.LevelProgress)
-        return entityObjects.Objects.PointsHistory.DataObject;
+        return entityObjects.Objects.LevelProgress.DataObject;
     return null
 }
